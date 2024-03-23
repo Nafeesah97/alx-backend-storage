@@ -8,6 +8,5 @@ BEGIN
     UPDATE items
         SET quantity = quantity - NEW.quantity
         WHERE name = NEW.name
-END;
-..
+END..
 DELIMITER ;
