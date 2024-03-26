@@ -14,14 +14,12 @@ patches = log_collection.count_documents({"method" : "PATCH"})
 deletes = log_collection.count_documents({"method" : "DELETE"})
 get_status = log_collection.count_documents({ '$and': [{"method" : "GET"}, {"path" : "/status"}]})
 
-print('''
-      {} logs
-      Methods:
-        method GET: {}
-        method POST: {}
-        method PUT: {}
-        method PATCH: {}
-        method DELETE: {}
-      {} status check
-      '''
-      .format(total_doc, gets, posts, puts, patches, deletes, get_status))
+print('''{} logs
+Methods:
+      method GET: {}
+      method POST: {}
+      method PUT: {}
+      method PATCH: {}
+      method DELETE: {}
+{} status check'''
+.format(total_doc, gets, posts, puts, patches, deletes, get_status))
