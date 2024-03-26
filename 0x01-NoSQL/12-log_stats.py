@@ -14,15 +14,10 @@ def get_stats(log_collection):
     get_status = log_collection.count_documents(
         {'$and': [{"method": "GET"}, {"path": "/status"}]})
 
-    print('''{} logs
-Methods:
-    method GET: {}
-    method POST: {}
-    method PUT: {}
-    method PATCH: {}
-    method DELETE: {}
-{} status check'''.format(
-        total_doc, gets, posts, puts, patches, deletes, get_status))
+    print(
+    '''{} logs\nMethods:\n\tmethod GET: {}\n\tmethod POST: {}\n\tmethod PUT:{}
+    \tmethod PATCH: {}\n\tmethod DELETE: {}\n{} status check'''.format(
+            total_doc, gets, posts, puts, patches, deletes, get_status))
 
 
 if __name__ == "__main__":
