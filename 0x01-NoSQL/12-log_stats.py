@@ -5,23 +5,16 @@ from pymongo import MongoClient
 
 def get_stats(log_collection):
     """get statistics about Nginx logs stored in MongoDB"""
-    total_doc = log_collection.count_documents({})
-    print('{} logs'.format(total_doc))
+    print('{} logs'.format(log_collection.count_documents({})))
     print('Methods:')
-    gets = log_collection.count_documents({"method": "GET"})
-    posts = log_collection.count_documents({"method": "POST"})
-    puts = log_collection.count_documents({"method": "PUT"})
-    patches = log_collection.count_documents({"method": "PATCH"})
-    deletes = log_collection.count_documents({"method": "DELETE"})
-    print('    method GET: {}'.format(gets))
-    print('    method POST: {}'.format(posts))
-    print('    method PUT: {}'.format(puts))
-    print('    method PATCH: {}'.format(patches))
-    print('    method DELETE: {}'.format(deletes))
-    get_status = log_collection.count_documents(
-        {'$and': [{"method": "GET"}, {"path": "/status"}]})
-    print('{} status check'.format(get_status))
-
+    methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+    for method in methods:
+        req_count = len(list(log_collection.find({'method': method})))
+        print('\tmethod {}: {}'.format(method, req_count))
+    status_checks_count = len(list(
+        log_collection.find({'method': 'GET', 'path': '/status'})
+    ))
+    print('{} status check'.format(status_checks_count))
 
 def run():
     """To run function"""
