@@ -14,9 +14,9 @@ def get_stats(log_collection):
     get_status = log_collection.count_documents(
         {'$and': [{"method": "GET"}, {"path": "/status"}]})
 
-    print(
-    '''{} logs\nMethods:\n\tmethod GET: {}\n\tmethod POST: {}\n\tmethod PUT:{}
-    \tmethod PATCH: {}\n\tmethod DELETE: {}\n{} status check'''.format(
+    print('''{} logs\nMethods:\n\tmethod GET: {}\n\tmethod POST: {}
+    \tmethod PUT:{}\n\tmethod PATCH: {}\n\tmethod DELETE: {}\
+            \n{} status check'''.format(
             total_doc, gets, posts, puts, patches, deletes, get_status))
 
 
