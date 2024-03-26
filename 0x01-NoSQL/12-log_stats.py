@@ -23,7 +23,12 @@ def get_stats(log_collection):
     print('{} status check'.format(get_status))
 
 
-if __name__ == "__main__":
+def run():
+    """To run function"""
     client = MongoClient('mongodb://127.0.0.1:27017')
     log_collection = client.logs.nginx
     get_stats(log_collection)
+
+
+if __name__ == "__main__":
+    run()
