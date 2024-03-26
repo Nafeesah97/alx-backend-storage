@@ -22,7 +22,7 @@ Methods:
     method PATCH: {}
     method DELETE: {}
 {} status check'''.format(
-    total_doc, gets, posts, puts, patches, deletes, get_status))
+        total_doc, gets, posts, puts, patches, deletes, get_status))
 
 
 if __name__ == "__main__":
