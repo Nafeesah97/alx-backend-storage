@@ -6,13 +6,12 @@ from pymongo import DESCENDING
 def top_students(mongo_collection):
     """returns all students sorted by average score"""
     pipeline = [
-        {"$unwind": "$scores"},
+        {"$unwind": "$topics"},
         {"$group": {
             "_id": "$_id",
-            "student_id": {"$first": "$_id"},
-            "average_score": {"$avg": "$scores.score"}
+            "name": {"$first": "$name"},
+            "averageScore": {"$avg": "$topics.score"}
         }},
-        {"$sort": {"average_score": -1}}
+        {"$sort": {"averageScore": DESCENDING}}
     ]
-    result = list(mongo_collection.aggregate(pipeline))
-    return result
+    return(list(mongo_collection.aggregate(pipeline)))
