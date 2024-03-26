@@ -16,10 +16,10 @@ get_status = log_collection.count_documents({ '$and': [{"method" : "GET"}, {"pat
 
 print('''{} logs
 Methods:
-      method GET: {}
-      method POST: {}
-      method PUT: {}
-      method PATCH: {}
-      method DELETE: {}
+    method GET: {}
+    method POST: {}
+    method PUT: {}
+    method PATCH: {}
+    method DELETE: {}
 {} status check'''
 .format(total_doc, gets, posts, puts, patches, deletes, get_status))
