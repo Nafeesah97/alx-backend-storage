@@ -9,7 +9,7 @@ from functools import wraps
 def count_calls(method: callable) -> callable:
     """count how many times methods of the Cache class are called"""
     @wraps(method)
-    def counter(self, *args, **kwargs) -> Any:
+    def counter(self, *args, **kwargs):
         """increment the counter"""
         if isinstance(self._redis, redis.Redis):
             self._redis.incr(method.__qualname__)
