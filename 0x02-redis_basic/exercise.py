@@ -16,6 +16,24 @@ def count_calls(method: callable) -> callable:
             self._redis.incr(method.__qualname__)
         return method(self, *args, **kwargs)
     return counter
+
+
+def call_history(method: Callable) -> Callable:
+    '''Tracks tinput and output of a method in a Cache class.
+    '''
+    @wraps(method)
+    def retriver(self, *args, **kwargs) -> Any:
+        '''Returns the method's output after storing its inputs and output.
+        '''
+        in_put = '{}:inputs'.format(method.__qualname__)
+        out_put = '{}:outputs'.format(method.__qualname__)
+        if isinstance(self._redis, redis.Redis):
+            self._redis.rpush(in_put, str(args))
+        output = method(self, *args, **kwargs)
+        if isinstance(self._redis, redis.Redis):
+            self._redis.rpush(out_put, output)
+        return output
+    return retriver
         
 
 class Cache():
@@ -31,6 +49,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """takes a data argument and returns a string"""
