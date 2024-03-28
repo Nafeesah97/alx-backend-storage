@@ -2,15 +2,14 @@
 """
 Main file
 """
-import redis
+import time
 
 
-Cache = __import__('exercise').Cache
-replay = __import__('exercise').replay
+get_page = __import__('web').get_page
+urls = ["http://slowwly.robertomurray.co.uk/delay/10000/url/https://example.com",
+            "http://slowwly.robertomurray.co.uk/delay/10000/url/https://www.google.com"]
 
-cache = Cache()
-
-cache.store("foo")
-cache.store("bar")
-cache.store(42)
-print(replay(cache.store))
+for url in urls:
+    start_time = time.time()
+    content = get_page(url)
+    print(f"URL: {url}, Content Length: {len(content)}, Time Taken: {time.time() - start_time} seconds")
