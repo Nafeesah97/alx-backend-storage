@@ -13,8 +13,7 @@ def count_calls(method: callable) -> callable:
     def counter(self, *args, **kwargs):
         """increment the counter"""
         if isinstance(self._redis, redis.Redis):
-            key = f"{method.__qualname__}:calls"
-            self._redis.incr(key)
+            self._redis.incr(method.__qualname__)
         return method(self, *args, **kwargs)
     return counter
         
