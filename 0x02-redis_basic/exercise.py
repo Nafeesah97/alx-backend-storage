@@ -34,6 +34,22 @@ def call_history(method: Callable) -> Callable:
             self._redis.rpush(out_put, output)
         return output
     return retriver
+
+def replay(method: Callable) -> None:
+    """Function to display the history of calls of a particular function."""
+    cache_store = getattr(method.__self__, '_redis', None)
+    input = f"{method.__qualname__}:inputs"
+    output = f"{method.__qualname__}:outputs"
+
+    inputs = cache_store.lrange(input, 0, -1)
+    outputs = cache_store.lrange(output, 0, -1)
+
+    print(f"{method.__qualname__} was called {len(inputs)} times:")
+
+    for args, output in zip(inputs, outputs):
+        args_str = args.decode('utf-8')  # Convert bytes to string
+        output_str = output.decode('utf-8')  # Convert bytes to string
+        print(f"{method.__qualname__}(*{args_str}) -> {output_str}")
         
 
 class Cache():
